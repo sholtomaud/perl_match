@@ -4,8 +4,8 @@ Simulate a card game called "Match!" between two computer players using N
 packs of cards (standard 52 card, 4 suit packs). The "Match!" matching condition
 can be the face value of the card, the suit, or both. The program should ask:
 
-(i) how many packs of cards to use (N)
-(ii) which of the three matching conditions to use
+1. how many packs of cards to use (N)
+1. which of the three matching conditions to use
 
 and then run a simulation of the cards being shuffled then played from the top of
 the pile. When two matching cards are played sequentially, a player is chosen
