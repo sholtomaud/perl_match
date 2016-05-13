@@ -57,9 +57,7 @@ sub play {
     foreach my $i (0 .. $pack_size-1) {
         my %check;
         foreach my $pack ( keys %packs ){
-            # print "   Matching hand $i\r";
             my $matcher;
-
             switch ($match_conditions) {
         		case "face" {
                     $matcher = "$packs{$pack}[$i]{'value'}";
@@ -80,12 +78,10 @@ sub play {
             $check{$matcher}{$pack}++;
         }
     }
-    # print "\n";
 }
 
 sub prepare_packs {
     for (my $i=1; $i <= $number_of_packs; $i++) {
-        # print "    Preparing pack $i\n";
         my @pack;
         foreach my $value ( keys %face_values ){
             foreach my $n (0 .. $#suits) {
@@ -95,7 +91,6 @@ sub prepare_packs {
                 push @pack, \%card;
             }
         }
-        # print "    Shuffling pack\n";
         shuffle(\@pack);
         $packs{$i} = \@pack;
     }
