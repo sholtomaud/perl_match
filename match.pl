@@ -14,34 +14,37 @@
 
 use strict;
 use warnings;
+use Switch;
 use Data::Dumper;
 use Getopt::Long qw(GetOptions);
 
-my ($number_of_packs, $match_conditions) = @ARGV;
-my %packs;
-
-my $source_address;
-GetOptions('from=s' => \$source_address) or die "Usage: $0 --from NAME\n";
-if ($source_address) {
-    say $source_address;
-}
+my ($number_of_packs, $match_conditions,%packs);
+GetOptions('match=s' => \$match_conditions,'packs=n'=>\$number_of_packs) or die "Usage: $0 --packs [2..n] --match [face,suit,both]\n";
 
 my @suits = ("spades","hearts","diamonds","clubs");
 my %face_values = ( k => "king", q => "queen", j => "jack", 10 => "ten", 9 => "nine", 8 => "eight", 7 => "seven", 6 => "six", 5 => "five", 4 => "four", 3 => "three", 2 => "two", a => "ace" );
 my $pack_size = 52;
 my %matches;
 
+# :MAIN:
+print "\n1) Preparing $number_of_packs packs\n";
 prepare_packs();
+print "2) Playing match\n";
 play();
+print "3) Preparing report\n";
 report();
 
+# :END
+
 sub report {
-    print "\nMATCHES\n";
+    print "\nMATCH REPORT\n";
     print "===========================\n";
-    print "Card        | Packs     \n";
+    print "Card             | Packs     \n";
     print "---------------------------\n";
     foreach my $card ( keys %matches){
-        print sprintf("%-11s", $card)," |";
+        my @cds = split ( /\s/, $card );
+        my $mt = ( $#cds > 1) ? "$face_values{$cds[0]} $cds[1] ": $card;
+        print sprintf("%-17s", $mt)," |";
         foreach my $pack (keys %{$matches{$card}}){
             print " $pack";
         }
@@ -54,22 +57,36 @@ sub play {
     foreach my $i (0 .. $pack_size-1) {
         my %check;
         foreach my $pack ( keys %packs ){
-            # print $packs{$pack}[$i]{'value'};
-            my $card = "$packs{$pack}[$i]{'value'} $packs{$pack}[$i]{'suit'}";
-            if (defined $check{$card}){
-                my $ke;
-                foreach my $matchpack ( keys %{$check{$card}}){
-                    $matches{$card}{$matchpack}++;
-                    $matches{$card}{$pack}++;
+            # print "   Matching hand $i\r";
+            my $matcher;
+
+            switch ($match_conditions) {
+        		case "face" {
+                    $matcher = "$packs{$pack}[$i]{'value'}";
+                }
+        		case "suit" {
+                    $matcher = "$packs{$pack}[$i]{'suit'}";
+                }
+        		case "both" {
+                     $matcher = "$packs{$pack}[$i]{'value'} $packs{$pack}[$i]{'suit'}";
                 }
             }
-            $check{$card}{$pack}++;
+
+            if (defined $check{$matcher}){
+                foreach my $matchpack ( keys %{$check{$matcher}}){
+                    $matches{$matcher}{$matchpack}++;
+                    $matches{$matcher}{$pack}++;
+                }
+            }
+            $check{$matcher}{$pack}++;
         }
     }
+    # print "\n";
 }
 
 sub prepare_packs {
     for (my $i=1; $i <= $number_of_packs; $i++) {
+        # print "    Preparing pack $i\n";
         my @pack;
         foreach my $value ( keys %face_values ){
             foreach my $n (0 .. $#suits) {
@@ -79,6 +96,7 @@ sub prepare_packs {
                 push @pack, \%card;
             }
         }
+        # print "    Shuffling pack\n";
         shuffle(\@pack);
         $packs{$i} = \@pack;
     }
