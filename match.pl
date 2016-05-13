@@ -18,11 +18,19 @@ use Switch;
 use POSIX;
 use Data::Dumper;
 use List::Util qw(max);
-use List::Util qw( reduce );
 use Getopt::Long qw(GetOptions);
 
 my ($number_of_packs, $match_conditions,%packs);
 GetOptions('match=s' => \$match_conditions,'packs=n'=>\$number_of_packs) or die "Usage: $0 --packs [2..n] --match [face,suit,both]\n";
+
+if (!$number_of_packs || !$match_conditions){
+    print "How many packs? [2..n]: ";
+    $number_of_packs = <STDIN>;
+    print "What match conditions? [face,suit,both]: ";
+    $match_conditions = <STDIN>;
+    chomp($match_conditions);
+    chomp($number_of_packs);
+}
 
 my @suits = ("spades","hearts","diamonds","clubs");
 my %face_values = ( k => "king", q => "queen", j => "jack", 10 => "ten", 9 => "nine", 8 => "eight", 7 => "seven", 6 => "six", 5 => "five", 4 => "four", 3 => "three", 2 => "two", a => "ace" );
@@ -58,7 +66,8 @@ sub play {
         my %check;
         foreach my $pack ( keys %packs ){
             my $matcher;
-            switch ($match_conditions) {
+
+            switch ( $match_conditions ) {
         		case "face" {
                     $matcher = "$packs{$pack}[$i]{'value'}";
                 }
@@ -69,7 +78,6 @@ sub play {
                      $matcher = "$packs{$pack}[$i]{'value'} $packs{$pack}[$i]{'suit'}";
                 }
             }
-
             if (defined $check{$matcher}){
                 # Who wins?
                 my $winner = ceil(rand(2));
