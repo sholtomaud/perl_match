@@ -72,7 +72,7 @@ sub play {
 
             if (defined $check{$matcher}){
                 # Who wins?
-                my $winner = ceil(rand($number_of_packs));
+                my $winner = ceil(rand(2));
                 $matches{$winner} += $number_of_packs;
             }
             $check{$matcher}{$pack}++;
