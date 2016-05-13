@@ -17,6 +17,8 @@ use warnings;
 use Switch;
 use POSIX;
 use Data::Dumper;
+use List::Util qw(max);
+use List::Util qw( reduce );
 use Getopt::Long qw(GetOptions);
 
 my ($number_of_packs, $match_conditions,%packs);
@@ -27,32 +29,28 @@ my %face_values = ( k => "king", q => "queen", j => "jack", 10 => "ten", 9 => "n
 my $pack_size = 52;
 my %matches;
 
-# :MAIN:printf("%.3f", 3.1415926535)
-
-# print "\n1) Preparing $number_of_packs packs\n";
 prepare_packs();
-# print "2) Playing match\n";
 play();
-# print "3) Preparing report\n";
 report();
 
-# :END
-
 sub report {
+    my @result;
+    my $max = max values %matches;
     print "\nMATCH REPORT\n";
     print "===================================\n";
     print "Player  | Matches     \n";
     print "-----------------------------------\n";
+    my $winnercount = 0;
     foreach my $player ( sort keys %matches){
-        # my @cds = split ( /\s/, $card );
-        # my $mt = ( $#cds > 0) ? "$face_values{$cds[0]} $cds[1] ": "$card";
         print sprintf("%-7s", $player)," | $matches{$player}";
-        # foreach my $pack (keys %{$matches{$card}}){
-        #     print " $pack";
-        # }
         print "\n";
+        if ( $matches{$player} == $max){
+            push @result, $player;
+        }
     }
     print "===================================\n\n";
+    my $declaration = ( $#result > 0 )? "Draw between " . join(' & ',@result) ."!" : "$result[0] is the winner!";
+    print "$declaration\n\n";
 }
 
 sub play {
