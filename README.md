@@ -1,3 +1,17 @@
+# Installing
+
+There are two options for getting the script.
+
+### 1. Download with git CLI
+```bash
+> git clone https://github.com/shotlom/perl_match.git
+```
+
+### 1. Download zip from URL
+
+()[https://github.com/shotlom/perl_match/archive/master.zip]
+
+
 # The task
 
 Simulate a card game called "Match!" between two computer players using N
