@@ -21,7 +21,7 @@ https://github.com/shotlom/perl_match/archive/master.zip
 The script takes two command line parameters as follows.
 
 ```bash
->perl ./match.pd --packs [2..n] --match [face,suit,both]
+>perl ./match.pl --packs [2..n] --match [face,suit,both]
 ```
 
 And produces a different result each time (see example output below).
