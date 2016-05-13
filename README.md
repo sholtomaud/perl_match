@@ -24,9 +24,9 @@ The script takes two command line parameters as follows.
 >perl ./match.pd --packs [2..n] --match [face,suit,both]
 ```
 
-And produces a different result each time:
-![report](/report.jpg)
+And produces a different result each time (see example output below).
 
+![report](/report.jpg)
 
 # The task
 
