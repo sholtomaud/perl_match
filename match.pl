@@ -38,11 +38,11 @@ sub report {
     my $max = max values %matches;
     print "\nMATCH REPORT\n";
     print "===================================\n";
-    print "Player  | Matches     \n";
+    print "Player# | Card count     \n";
     print "-----------------------------------\n";
     my $winnercount = 0;
     foreach my $player ( sort keys %matches){
-        print sprintf("%-7s", $player)," | $matches{$player}";
+        print sprintf("%7s", $player)," | $matches{$player}";
         print "\n";
         if ( $matches{$player} == $max){
             push @result, $player;
@@ -75,12 +75,7 @@ sub play {
             if (defined $check{$matcher}){
                 # Who wins?
                 my $winner = ceil(rand($number_of_packs));
-                $matches{$winner}++;
-                # foreach my $matchpack ( keys %{$check{$matcher}}){
-                #     # $matches{$matcher}{$matchpack}++;
-                #     # $matches{$matcher}{$winner}++;
-                #     $matches{$matcher}{$winner}++;
-                # }
+                $matches{$winner} += $number_of_packs;
             }
             $check{$matcher}{$pack}++;
         }
