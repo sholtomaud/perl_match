@@ -25,7 +25,7 @@ The script takes two command line parameters as follows.
 ```
 
 And produces a different result each time:
-[report][report.jpg]
+![report](/report.jpg)
 
 
 # The task
