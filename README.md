@@ -1,3 +1,7 @@
+# What
+
+A simple Perl script to demonstrate the 'match' card game to recruiters. (See task definition).
+
 # Installing
 
 There are two options for getting the script.
@@ -9,7 +13,19 @@ There are two options for getting the script.
 
 ### 1. Download zip from URL
 
-()[https://github.com/shotlom/perl_match/archive/master.zip]
+Either navigate to the following or use the download button on this screen.
+https://github.com/shotlom/perl_match/archive/master.zip
+
+# Running
+
+The script takes two command line parameters as follows.
+
+```bash
+>perl ./match.pd --packs [2..n] --match [face,suit,both]
+```
+
+And produces a different result each time:
+[report](./report.jpg)
 
 
 # The task

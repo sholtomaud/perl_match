@@ -38,19 +38,19 @@ report();
 
 sub report {
     print "\nMATCH REPORT\n";
-    print "===========================\n";
-    print "Card             | Packs     \n";
-    print "---------------------------\n";
+    print "===================================\n";
+    print "Card              | Packs     \n";
+    print "-----------------------------------\n";
     foreach my $card ( keys %matches){
         my @cds = split ( /\s/, $card );
-        my $mt = ( $#cds > 1) ? "$face_values{$cds[0]} $cds[1] ": $card;
-        print sprintf("%-17s", $mt)," |";
+        my $mt = ( $#cds > 0) ? "$face_values{$cds[0]} $cds[1] ": "$card";
+        print sprintf("%-17s", uc($mt))," |";
         foreach my $pack (keys %{$matches{$card}}){
             print " $pack";
         }
         print "\n";
     }
-    print "===========================\n\n";
+    print "===================================\n\n";
 }
 
 sub play {
