@@ -18,7 +18,15 @@ https://github.com/shotlom/perl_match/archive/master.zip
 
 # Running
 
-The script takes two command line parameters as follows.
+The script either takes options from user input, e.g.
+
+```bash
+>perl ./match.pl
+>How many packs? [2..n]: 8
+>What match conditions? [face,suit,both]: suit
+```
+
+or two command line parameters as follows.
 
 ```bash
 >perl ./match.pl --packs [2..n] --match [face,suit,both]
