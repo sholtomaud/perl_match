@@ -42,23 +42,28 @@ play();
 report();
 
 sub report {
-    my @result;
-    my $max = max values %matches;
-    print "\nMATCH REPORT\n";
-    print "===================================\n";
-    print "Player# | Card count     \n";
-    print "-----------------------------------\n";
-    my $winnercount = 0;
-    foreach my $player ( sort keys %matches){
-        print sprintf("%7s", $player)," | $matches{$player}";
-        print "\n";
-        if ( $matches{$player} == $max){
-            push @result, $player;
-        }
+    if (!%matches){
+        print "\nNo matches!\n\n";
     }
-    print "===================================\n\n";
-    my $declaration = ( $#result > 0 )? "Draw between " . join(' & ',@result) ."!" : "$result[0] is the winner!";
-    print "$declaration\n\n";
+    else{
+        my @result;
+        my $max = max values %matches;
+        print "\nMATCH REPORT\n";
+        print "===================================\n";
+        print "Player# | Card count     \n";
+        print "-----------------------------------\n";
+        my $winnercount = 0;
+        foreach my $player ( sort keys %matches){
+            print sprintf("%7s", $player)," | $matches{$player}";
+            print "\n";
+            if ( $matches{$player} == $max){
+                push @result, $player;
+            }
+        }
+        print "===================================\n\n";
+        my $declaration = ( $#result > 0 )? "Draw between " . join(' & ',@result) ."!" : "$result[0] is the winner!";
+        print "$declaration\n\n";
+    }
 }
 
 sub play {
